@@ -5,9 +5,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.TextView;
 
 import com.roomorama.caldroid.CaldroidFragment;
 import com.wdtpr.testcalendar.customerView.CaldroidSampleCustomFragment;
@@ -42,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
             caldroidFragment.setBackgroundDrawableForDate(green, greenDate);
             caldroidFragment.setTextColorForDate(R.color.white, blueDate);
             caldroidFragment.setTextColorForDate(R.color.white, greenDate);
-
-//            caldroidFragment.setMonthTitleTextView();
         }
     }
     @Override
@@ -88,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 //             args.putBoolean(CaldroidFragment.SQUARE_TEXT_VIEW_CELL, true);
 
             // Uncomment this line to use dark theme 使用黑暗 模式
-            args.putInt(CaldroidFragment.THEME_RESOURCE, com.caldroid.R.style.CaldroidDefaultDark);
+//            args.putInt(CaldroidFragment.THEME_RESOURCE, com.caldroid.R.style.CaldroidDefaultDark);
 
             caldroidFragment.setArguments(args);
         }
@@ -100,11 +95,6 @@ public class MainActivity extends AppCompatActivity {
         t.replace(R.id.calendar1, caldroidFragment);
         t.commit();
 
-        LayoutInflater inflater = MainActivity.this.getLayoutInflater();
-        View view = inflater.inflate(R.layout.date_text,null);
-        TextView abc = (TextView)view.findViewById(R.id.abc);
-        abc.setText("我是大笨蛋");
-        caldroidFragment.setMonthTitleTextView(abc);
 
     }
 }
