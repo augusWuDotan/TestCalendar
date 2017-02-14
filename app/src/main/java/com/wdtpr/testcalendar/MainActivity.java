@@ -1,12 +1,13 @@
 package com.wdtpr.testcalendar;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Toast;
 
 import com.roomorama.caldroid.CaldroidFragment;
+import com.roomorama.caldroid.CaldroidListener;
 import com.wdtpr.testcalendar.customerView.CaldroidSampleCustomFragment;
 
 import java.text.SimpleDateFormat;
@@ -32,14 +33,14 @@ public class MainActivity extends AppCompatActivity {
         cal.add(Calendar.DATE, 7);
         Date greenDate = cal.getTime();
 
-        if (caldroidFragment != null) {
-            ColorDrawable blue = new ColorDrawable(getResources().getColor(R.color.blue));
-            ColorDrawable green = new ColorDrawable(Color.GREEN);
-            caldroidFragment.setBackgroundDrawableForDate(blue, blueDate);
-            caldroidFragment.setBackgroundDrawableForDate(green, greenDate);
-            caldroidFragment.setTextColorForDate(R.color.white, blueDate);
-            caldroidFragment.setTextColorForDate(R.color.white, greenDate);
-        }
+//        if (caldroidFragment != null) {
+//                ColorDrawable blue = new ColorDrawable(getResources().getColor(R.color.blue));
+//            ColorDrawable green = new ColorDrawable(Color.GREEN);
+//            caldroidFragment.setBackgroundDrawableForDate(blue, blueDate);
+//            caldroidFragment.setBackgroundDrawableForDate(green, greenDate);
+//            caldroidFragment.setTextColorForDate(R.color.white, blueDate);
+//            caldroidFragment.setTextColorForDate(R.color.white, greenDate);
+//        }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +95,44 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction t = getSupportFragmentManager().beginTransaction();
         t.replace(R.id.calendar1, caldroidFragment);
         t.commit();
+
+        // Setup listener
+        final CaldroidListener listener = new CaldroidListener() {
+
+            @Override
+            public void onSelectDate(Date date, View view) {
+                Toast.makeText(getApplicationContext(), formatter.format(date),
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onChangeMonth(int month, int year) {
+                String text = "month: " + month + " year: " + year;
+                Toast.makeText(getApplicationContext(), text,
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onLongClickDate(Date date, View view) {
+                Toast.makeText(getApplicationContext(),
+                        "Long click " + formatter.format(date),
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCaldroidViewCreated() {
+                if (caldroidFragment.getLeftArrowButton() != null) {
+                    Toast.makeText(getApplicationContext(),
+                            "Caldroid view is created", Toast.LENGTH_SHORT)
+                            .show();
+                }
+            }
+
+        };
+
+        // Setup Caldroid
+        caldroidFragment.setCaldroidListener(listener);
+
 
 
     }
